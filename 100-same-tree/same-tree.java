@@ -21,8 +21,6 @@ class Solution {
             return false;
         }
         
-        if(p == null && q == null) return true;
-        if(p == null||q == null) return false;
         return helper(p.right,q.right) && helper(p.left,q.left);
         
         // return true;
