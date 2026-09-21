@@ -14,28 +14,24 @@
  * }
  */
 class Solution {
+    void helper(TreeNode root,List<Integer> ans,int[]arr,int level){
+        if(root == null){
+            return;
+        }
+        if(arr[0]<level){
+            ans.add(root.val);
+            arr[0]++;
+        }
+        helper(root.right,ans,arr,level+1);
+        helper(root.left,ans,arr,level+1);
+
+    }
+
     public List<Integer> rightSideView(TreeNode root) {
         List<Integer> ans = new ArrayList<>();
-        Queue<TreeNode> q = new LinkedList<TreeNode>();
-        if (root == null)
-            return ans;
-        q.offer(root);
-        while (!q.isEmpty()) {
-            int n = q.size();
-            boolean flag = false;
-            for (int i = 0; i < n; i++) {
-                TreeNode temp = q.poll();
-                if (flag == false) {
-                    ans.add(temp.val);
-                    flag = true;
-                }
-                if (temp.right != null)
-                    q.offer(temp.right);
-                if (temp.left != null)
-                    q.offer(temp.left);
-            }
-
-        }
+        int []arr = new int[1];
+        arr[0] = 0;
+        helper(root,ans,arr,1);
         return ans;
     }
 }
