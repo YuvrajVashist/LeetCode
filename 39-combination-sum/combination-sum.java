@@ -23,6 +23,8 @@ class Solution {
         int index = 0; 
 
         fn(candidates,index,target,list,ans);
-        return ans;
+        // Collections.sort(ans);
+        List<List<Integer>> result = new ArrayList<>(ans);
+        return result;
     }
 }
