@@ -17,6 +17,7 @@ class Solution {
     }
 
     public List<List<Integer>> permuteUnique(int[] nums) {
+        Arrays.sort(nums);
         HashSet<List<Integer>> ans = new HashSet<>();
         List<Integer> list = new ArrayList<>();
         boolean[]mp = new boolean[nums.length];
