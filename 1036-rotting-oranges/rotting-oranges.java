@@ -1,82 +1,76 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int rows = grid.length;
-        int cols = grid[0].length;
-        int ans = 0;
-        boolean[][] visited = new boolean[rows][cols];
+        int minutes = 0;
+        int n = grid.length;
+        int m = grid[0].length;
+        boolean[][] visited = new boolean[n][m];
         Queue<ArrayList<Integer>> q = new LinkedList<>();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 2) {
                     ArrayList<Integer> list = new ArrayList<>();
+                    visited[i][j] = true;
                     list.add(i);
                     list.add(j);
                     list.add(0);
                     q.add(list);
-                    visited[i][j] = true;
                 }
             }
         }
         while (!q.isEmpty()) {
-            ArrayList<Integer> list = q.poll();
-            int i = list.get(0);
-            int j = list.get(1);
-            int time = list.get(2);
-            ans = Math.max(ans, time);
+            ArrayList<Integer> curr = q.poll();
+            int i = curr.get(0);
+            int j = curr.get(1);
+            int time = curr.get(2);
+            minutes = Math.max(minutes, time);
             //top
-            if (i - 1 >= 0 && !visited[i-1][j] && grid[i - 1][j] == 1) {
+            if (i - 1 >= 0 && !visited[i - 1][j] && grid[i - 1][j] == 1) {
                 ArrayList<Integer> temp = new ArrayList<>();
+                visited[i - 1][j] = true;
                 temp.add(i - 1);
                 temp.add(j);
                 temp.add(time + 1);
                 q.add(temp);
-                visited[i - 1][j] = true;
-                // grid[i-1][j] = 2;
+
             }
             //bottom
-            if (i + 1<rows && !visited[i+1][j] && grid[i + 1][j] == 1) {
+            if (i + 1 < n && !visited[i + 1][j] && grid[i + 1][j] == 1) {
                 ArrayList<Integer> temp = new ArrayList<>();
-
+                visited[i + 1][j] = true;
                 temp.add(i + 1);
                 temp.add(j);
                 temp.add(time + 1);
                 q.add(temp);
-                visited[i + 1][j] = true;
-                // grid[i+1][j] = 2;
             }
-            //left
-            if (j - 1 >= 0 && !visited[i][j-1] && grid[i][j - 1] == 1) {
+            //left 
+            if (j - 1 >= 0 && !visited[i][j - 1] && grid[i][j - 1] == 1) {
                 ArrayList<Integer> temp = new ArrayList<>();
-
+                visited[i][j - 1] = true;
                 temp.add(i);
                 temp.add(j - 1);
                 temp.add(time + 1);
                 q.add(temp);
-                visited[i][j - 1] = true;
-                // grid[i][j-1] = 2;
+
             }
-
-            //rigth
-            if (j + 1 <cols && !visited[i][j+1] && grid[i][j + 1] == 1) {
+            // right
+            if (j + 1 < m && !visited[i][j + 1] && grid[i][j + 1] == 1) {
                 ArrayList<Integer> temp = new ArrayList<>();
-
+                visited[i][j + 1] = true;
                 temp.add(i);
                 temp.add(j + 1);
                 temp.add(time + 1);
                 q.add(temp);
-                visited[i][j + 1] = true;
-                // grid[i][j+1] = 2;
             }
         }
 
-        //check fresh oranges
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
                 if (grid[i][j] == 1 && !visited[i][j]) {
                     return -1;
                 }
             }
         }
-        return ans;
+        return minutes;
     }
 }
